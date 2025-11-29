@@ -8,9 +8,11 @@ Summary:        X Keyboard Extension config data modified for GalliumOS/Chromebo
 License:        X11
 URL:            https://github.com/GalliumOS/xkeyboard-config
 
-# This is the line that fetches the remote ZIP file.
-# The filename part of the URL (xkeyboard-config-release-1.0.zip) becomes Source0.
-Source0:        https://github.com/GalliumOS/xkeyboard-config/archive/refs/tags/release-1.0.zip
+%define git_commit      master
+%define short_name      xkeyboard-config
+
+# Source0 fetches the archive of the defined git_commit.
+Source0:        https://github.com/GalliumOS/%{short_name}/archive/%{git_commit}/%{short_name}-%{git_commit}.tar.gz
 
 # Custom patches (must be present in the SOURCES/ directory)
 Patch1:         chromebook.patch
