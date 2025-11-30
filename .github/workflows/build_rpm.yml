@@ -31,14 +31,14 @@ jobs:
         # Install core RPM build tools
         dnf -y install rpm-build rpmdevtools gcc make wget
         
-        # Install dependencies listed in your .spec file
+        # Install new build system dependencies (Meson/Ninja)
         dnf -y install \
-          autoconf \
-          automake \
+          meson \
+          ninja-build \
+          git-core \
           gettext \
           libxml2-devel \
           libxkbfile-devel \
-          intltool \
           perl \
           libxslt \
           xorg-x11-util-macros
