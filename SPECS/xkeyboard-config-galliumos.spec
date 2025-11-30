@@ -15,7 +15,7 @@ URL:            https://github.com/GalliumOS/xkeyboard-config
 Source0:        https://github.com/GalliumOS/%{short_name}/archive/%{git_commit}/%{short_name}-%{git_commit}.tar.gz
 
 # Custom patches (must be present in the SOURCES/ directory)
-Patch1:         chromebook.patch
+Patch1:         chromebook-fixed.patch
 Patch2:         docs.diff
 Patch3:         fix-typo.diff
 Patch4:         revert-goodmap-badmap-for-apple.diff
