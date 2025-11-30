@@ -32,18 +32,18 @@ jobs:
         # FIX: Install SELinux policies to prevent "no policy found" errors
         # This bridges the gap between the host kernel and the container
         dnf -y install selinux-policy-targeted policycoreutils
-        
+
         # Install core RPM build tools
         dnf -y install rpm-build rpmdevtools gcc make wget
         
-        # Install new build system dependencies (Meson/Ninja)
+        # Install dependencies listed in your .spec file
         dnf -y install \
-          meson \
-          ninja-build \
-          git-core \
+          autoconf \
+          automake \
           gettext \
           libxml2-devel \
           libxkbfile-devel \
+          intltool \
           perl \
           libxslt \
           xorg-x11-util-macros
