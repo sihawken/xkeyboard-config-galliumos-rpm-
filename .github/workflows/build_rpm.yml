@@ -13,87 +13,75 @@ jobs:
   build:
     name: Build RPM Package
     runs-on: ubuntu-latest
-    container:
-      image: fedora:43
 
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
 
-    # 1. Capture the short commit hash (e.g. "a1b2c3d")
+    # 1. Capture the short commit hash
     - name: Get Short SHA
       id: vars
       run: echo "SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
 
-    - name: Install Build Dependencies
-      run: |
-        # This macro tells RPM (and DNF) not to load the SELinux plugin
-        # This prevents the "SELinux enabled, but no policy found" error
+    # 2. Run the Build inside a Fedora VM
+    #    This uses a real VM, so SELinux works correctly without hacks.
+    - name: Build in Fedora VM
+      uses: vmactions/fedora-vm@v1
+      with:
+        # 'rawhide' corresponds to the latest development version (e.g. Fedora 43)
+        # You can change this to '41' for the current stable release.
+        release: 43
+        usesh: true
+        mem: 4096
         
-        mkdir -p /etc/rpm/macros.d
-        echo "%__transaction_selinux %{nil}" > /etc/rpm/macros.d/macros.disable-selinux
+        # Install dependencies inside the VM before running the build
+        prepare: |
+          dnf -y update
+          dnf -y install rpm-build rpmdevtools gcc make wget \
+            autoconf automake gettext libxml2-devel libxkbfile-devel \
+            intltool perl libxslt xorg-x11-util-macros
         
-        dnf -y update
+        # The build script (runs inside the VM)
+        run: |
+          # 1. Setup RPM Build Tree in the VM's home directory
+          rpmdev-setuptree
+          
+          # 2. Copy files from the Workspace (mounted at .) to the Build Tree
+          cp SPECS/*.spec ~/rpmbuild/SPECS/
+          cp SOURCES/* ~/rpmbuild/SOURCES/
+          
+          # 3. Download Remote Sources (spectool)
+          spectool -g -R ~/rpmbuild/SPECS/xkeyboard-config-galliumos.spec
+          mv *.tar.gz ~/rpmbuild/SOURCES/ || true
+          
+          # 4. Build the RPM
+          rpmbuild -ba ~/rpmbuild/SPECS/xkeyboard-config-galliumos.spec
+          
+          # 5. Copy artifacts BACK to the workspace
+          #    The 'upload-artifact' step runs on the host, so we must 
+          #    move the files from the VM's home (~) to the workspace (.).
+          mkdir -p output_rpms output_srpms
+          cp -r ~/rpmbuild/RPMS/* output_rpms/
+          cp -r ~/rpmbuild/SRPMS/* output_srpms/
 
-        # Install core RPM build tools
-        dnf -y install rpm-build rpmdevtools gcc make wget
-        
-        # Install dependencies listed in your .spec file
-        dnf -y install \
-          autoconf \
-          automake \
-          gettext \
-          libxml2-devel \
-          libxkbfile-devel \
-          intltool \
-          perl \
-          libxslt \
-          xorg-x11-util-macros
-
-    - name: Setup RPM Build Tree
-      run: |
-        rpmdev-setuptree
-        # The tree is created at /github/home/rpmbuild (or similar depending on user)
-        # We need to move your files into this tree
-        
-        # Copy SPEC file
-        cp SPECS/*.spec ~/rpmbuild/SPECS/
-        
-        # Copy local patches from SOURCES
-        cp SOURCES/* ~/rpmbuild/SOURCES/
-
-    - name: Download Remote Sources
-      run: |
-        # 'spectool' parses the spec file and downloads Source0
-        # This handles the download of the xkeyboard-config tarball
-        spectool -g -R ~/rpmbuild/SPECS/xkeyboard-config-galliumos.spec
-        
-        # Move downloaded files to SOURCES directory
-        mv *.tar.gz ~/rpmbuild/SOURCES/ || true
-
-    - name: Build RPM
-      run: |
-        # Build Source and Binary RPMs
-        rpmbuild -ba ~/rpmbuild/SPECS/xkeyboard-config-galliumos.spec
-
+    # 3. Upload Artifacts (Modified to look in the output folders)
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       with:
         name: rpm-packages-${{ env.SHORT_SHA }}
         path: |
-          ~/rpmbuild/RPMS/**/*.rpm
-          ~/rpmbuild/SRPMS/*.rpm
+          output_rpms/**/*.rpm
+          output_srpms/*.rpm
 
-    # 3. Create a GitHub Release named after the commit hash
+    # 4. Create Release (Modified to look in the output folders)
     - name: Create Release
-      # Only release on pushes to main, not on pull requests
       if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
       uses: softprops/action-gh-release@v1
       with:
         tag_name: ${{ env.SHORT_SHA }}
         name: Build ${{ env.SHORT_SHA }}
         files: |
-          /github/home/rpmbuild/RPMS/**/*.rpm
-          /github/home/rpmbuild/SRPMS/*.rpm
+          output_rpms/**/*.rpm
+          output_srpms/*.rpm
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
