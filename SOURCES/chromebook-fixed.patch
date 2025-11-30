@@ -229,73 +229,73 @@
    *             =   +inet(evdev)
 --- a/rules/evdev.xml.in
 +++ b/rules/evdev.xml.in
-@@ -1309,6 +1309,69 @@
-        <vendor>Megawin Technology</vendor>
+@@ -1316,6 +1316,69 @@
+        <vendor>SteelSeries</vendor>
       </configItem>
      </model>
 +    <model>
-+      <configItem>
-+        <name>chromebook</name>
-+        <description>Chromebook (most models) | Search overlay</description>
-+        <vendor>Google</vendor>
-+      </configItem>
-+    </model>
-+    <model>
-+      <configItem>
-+        <name>chromebook_ralt</name>
-+        <description>Chromebook (most models) | Right alt overlay</description>
-+        <vendor>Google</vendor>
-+      </configItem>
-+    </model>
-+    <model>
-+      <configItem>
-+        <name>chromebook_m</name>
-+        <description>Chromebook (most models) | Search overlay | F keys mapped to media keys</description>
-+        <vendor>Google</vendor>
-+      </configItem>
-+    </model>
-+    <model>
-+      <configItem>
-+        <name>chromebook_m_ralt</name>
-+        <description>Chromebook (most models) | Right alt overlay | F keys mapped to media keys</description>
-+        <vendor>Google</vendor>
-+      </configItem>
-+    </model>
-+    <model>
-+      <configItem>
-+        <name>chromebook_falco</name>
-+        <description>Chromebook Falco/Pixel/Pixel2 | Search overlay</description>
-+        <vendor>Google</vendor>
-+      </configItem>
-+    </model>
-+    <model>
-+      <configItem>
-+        <name>chromebook_falco_ralt</name>
-+        <description>Chromebook Falco/Pixel/Pixel2 | Right alt overlay</description>
-+        <vendor>Google</vendor>
-+      </configItem>
-+    </model>
-+    <model>
-+      <configItem>
-+        <name>chromebook_m_falco</name>
-+        <description>Chromebook Falco/Pixel/Pixel2 | Search overlay | F keys mapped to media keys</description>
-+        <vendor>Google</vendor>
-+      </configItem>
-+    </model>
-+    <model>
-+      <configItem>
-+        <name>chromebook_m_falco_ralt</name>
-+        <description>Chromebook Falco/Pixel/Pixel2 | Right alt overlay | F keys mapped to media keys</description>
-+        <vendor>Google</vendor>
-+      </configItem>
-+    </model>
-+    <model>
-+      <configItem>
-+        <name>chromebook_no_m</name>
-+        <description>Chromebook (most models) | No overlay | F keys mapped to media keys</description>
-+        <vendor>Google</vendor>
-+      </configItem>
-+    </model>
++     <configItem>
++       <name>chromebook</name>
++       <description>Chromebook (most models) | Search overlay</description>
++       <vendor>Google</vendor>
++     </configItem>
++   </model>
++   <model>
++     <configItem>
++       <name>chromebook_ralt</name>
++       <description>Chromebook (most models) | Right alt overlay</description>
++       <vendor>Google</vendor>
++     </configItem>
++   </model>
++   <model>
++     <configItem>
++       <name>chromebook_m</name>
++       <description>Chromebook (most models) | Search overlay | F keys mapped to media keys</description>
++       <vendor>Google</vendor>
++     </configItem>
++   </model>
++   <model>
++     <configItem>
++       <name>chromebook_m_ralt</name>
++       <description>Chromebook (most models) | Right alt overlay | F keys mapped to media keys</description>
++       <vendor>Google</vendor>
++     </configItem>
++   </model>
++   <model>
++     <configItem>
++       <name>chromebook_falco</name>
++       <description>Chromebook Falco/Pixel/Pixel2 | Search overlay</description>
++       <vendor>Google</vendor>
++     </configItem>
++   </model>
++   <model>
++     <configItem>
++       <name>chromebook_falco_ralt</name>
++       <description>Chromebook Falco/Pixel/Pixel2 | Right alt overlay</description>
++       <vendor>Google</vendor>
++     </configItem>
++   </model>
++   <model>
++     <configItem>
++       <name>chromebook_m_falco</name>
++       <description>Chromebook Falco/Pixel/Pixel2 | Search overlay | F keys mapped to media keys</description>
++       <vendor>Google</vendor>
++     </configItem>
++   </model>
++   <model>
++     <configItem>
++       <name>chromebook_m_falco_ralt</name>
++       <description>Chromebook Falco/Pixel/Pixel2 | Right alt overlay | F keys mapped to media keys</description>
++       <vendor>Google</vendor>
++     </configItem>
++   </model>
++   <model>
++     <configItem>
++       <name>chromebook_no_m</name>
++       <description>Chromebook (most models) | No overlay | F keys mapped to media keys</description>
++       <vendor>Google</vendor>
++     </configItem>
++   </model>
    </modelList>
    <layoutList>
      <layout>
