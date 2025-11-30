@@ -75,6 +75,7 @@ find %{buildroot} -name "*.la" -delete
 # All documentation and translation files
 %{_datadir}/locale/*
 %{_mandir}/man7/*
+%{_datadir}/pkgconfig/xkeyboard-config.pc
 
 %changelog
 * Sat Nov 29 2025 sihawken - 1.0.0-1
