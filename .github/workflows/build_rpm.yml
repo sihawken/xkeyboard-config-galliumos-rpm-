@@ -14,7 +14,7 @@ jobs:
     name: Build RPM Package
     runs-on: ubuntu-latest
     container:
-      image: fedora:latest
+      image: fedora:43
 
     steps:
     - name: Checkout Code
