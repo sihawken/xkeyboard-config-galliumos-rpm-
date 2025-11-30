@@ -11,6 +11,11 @@ Summary:        X Keyboard Extension config data modified for GalliumOS/Chromebo
 License:        X11
 URL:            https://github.com/GalliumOS/xkeyboard-config
 
+# This allows this package to satisfy dependencies that ask for "xkeyboard-config"
+Provides:       xkeyboard-config = %{version}-%{release}
+# Since this installs the same files, it conflicts with the stock package
+Conflicts:      xkeyboard-config
+
 %define git_commit      master
 %define short_name      xkeyboard-config
 
