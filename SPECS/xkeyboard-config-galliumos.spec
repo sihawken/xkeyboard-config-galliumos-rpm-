@@ -4,7 +4,7 @@
 # The name of your COPR package. Must be unique.
 Name:           xkeyboard-config-galliumos
 # The package version should reflect the source (release-1.0)
-Version:        1.0.0
+Version:        2.44
 Release:        1%{?dist}
 Summary:        X Keyboard Extension config data modified for GalliumOS/Chromebooks
 
