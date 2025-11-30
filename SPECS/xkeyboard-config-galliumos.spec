@@ -49,16 +49,7 @@ Chromebook hardware, based on the GalliumOS/xkeyboard-config source.
 
 %prep
 # Unpack Source0
-# (Note: Ensure your -n flag matches the directory structure of the new tarball as discussed previously)
-%setup -q -n %{short_name}-%{git_commit}-<HASH>
-
-# Copy autogen.sh from SOURCES to the current build directory
-cp %{SOURCE1} autogen.sh
-chmod +x autogen.sh
-
-# Run autogen.sh
-# We use NOCONFIGURE=1 because the %build section handles the configure step normally
-NOCONFIGURE=1 ./autogen.sh
+%setup -q -n %{short_name}-%{git_commit}
 
 # Apply all patches using the standard -p1 strip level
 %patch -P 1 -p1
