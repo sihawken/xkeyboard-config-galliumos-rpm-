@@ -2,7 +2,7 @@
 %global debug_package %{nil}
 
 # The name of your COPR package. Must be unique.
-Name:           xkeyboard-config-galliumos
+Name:           xkeyboard-config-galliumos-rpm
 # The package version should reflect the source (release-1.0)
 Version:        2.44
 Release:        1%{?dist}
